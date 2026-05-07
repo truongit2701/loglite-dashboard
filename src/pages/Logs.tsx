@@ -1,22 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  Activity, 
-  Terminal, 
-  Search, 
-  RefreshCw,
+import {
+  Activity,
+  AlertTriangle,
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
   Filter,
-  AlertTriangle,
-  LogOut
+  RefreshCw,
+  Search,
+  Terminal
 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import ThemeToggle from '../components/ThemeToggle';
-import { LogTable } from '../components/LogTable';
 import { FilterBar } from '../components/FilterBar';
 import { LogDetail } from '../components/LogDetail';
+import { LogTable } from '../components/LogTable';
+import ThemeToggle from '../components/ThemeToggle';
 import { useLogs } from '../hooks/useLogs';
 import type { LogEntry, LogFilters } from '../types';
 
@@ -32,12 +31,6 @@ function useDebounce<T>(value: T, delay: number): T {
 export default function Logs() {
   const { projectId } = useParams(); // Using projectId from URL params
   const navigate = useNavigate();
-  
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
 
   const CACHE_KEY_FILTERS = `loglite_filters_${projectId}`;
   const CACHE_KEY_REFRESH = `loglite_refresh_${projectId}`;

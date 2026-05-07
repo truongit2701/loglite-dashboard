@@ -85,8 +85,6 @@ export const LogDetail: React.FC<LogDetailProps> = ({ log, onClose }) => {
             <span className="text-[10px] uppercase font-bold text-zinc-400">Full Record Data</span>
             <pre className="p-4 bg-zinc-950 text-emerald-400 text-[11px] font-mono border border-zinc-800 overflow-auto max-h-[400px]">
               {JSON.stringify({
-                _id: log._id,
-                projectId: log.projectId,
                 ...log
               }, (key, value) => key === 'stack' ? 'See stack section above...' : value, 2)}
             </pre>

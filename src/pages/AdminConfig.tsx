@@ -35,7 +35,6 @@ export default function AdminConfig() {
   const [allProjects, setAllProjects] = useState<AllProject[]>([]);
   const [ingestUrl, setIngestUrl] = useState('http://localhost:3001');
   
-  const [loading, setLoading] = useState(false);
   const [newItem, setNewItem] = useState({ name: '', code: '', description: '' });
 
   useEffect(() => {
@@ -43,7 +42,6 @@ export default function AdminConfig() {
   }, [activeTab]);
 
   const fetchData = async () => {
-    setLoading(true);
     try {
       if (activeTab === 'catalog') {
         const [p, d] = await Promise.all([
@@ -61,9 +59,7 @@ export default function AdminConfig() {
       }
     } catch (err) {
       console.error('Admin fetch error', err);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleSaveSettings = async () => {
