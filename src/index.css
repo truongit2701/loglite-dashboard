@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-default: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+/* Fix Dark Mode selector for Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+/* Global Base Styles */
+:root {
+  background-color: #fafafa;
+  color: #18181b;
+}
+
+.dark {
+  background-color: #09090b;
+  color: #f4f4f5;
+}
+
+body {
+  @apply font-sans antialiased transition-colors duration-200;
+}
+
+/* Ensure all square elements respect the theme */
+input, button, select, div {
+  @apply rounded-none transition-colors duration-200;
+}
+
+/* High-contrast border defaults for themes */
+.border-classic {
+  @apply border border-zinc-200 dark:border-zinc-800;
+}
