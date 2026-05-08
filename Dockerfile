@@ -1,13 +1,32 @@
-# Stage 1: Build
-FROM node:22-alpine as build-stage
+# =========================
+# Stage 1: Build React
+# =========================
+FROM node:22-alpine AS build
+
 WORKDIR /app
+
+# cache dependencies trước
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+
+# copy source
 COPY . .
+
+# build production
 RUN npm run build
 
-# Stage 2: Serve with Caddy
+
+# =========================
+# Stage 2: Caddy runtime
+# =========================
 FROM caddy:2-alpine
-COPY --from=build-stage /app/dist /usr/share/caddy
+
+# copy static build
+COPY --from=build /app/dist /srv
+
+# copy caddy config
 COPY Caddyfile /etc/caddy/Caddyfile
+
 EXPOSE 80 443
+
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
