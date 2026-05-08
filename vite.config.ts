@@ -8,5 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: '/loglite-dashboard/',
+  server: {
+    allowedHosts: true
+  }
 })

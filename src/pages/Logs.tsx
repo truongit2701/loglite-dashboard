@@ -7,7 +7,8 @@ import {
   Filter,
   RefreshCw,
   Search,
-  Terminal
+  Terminal,
+  LogOut
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -31,6 +32,12 @@ function useDebounce<T>(value: T, delay: number): T {
 export default function Logs() {
   const { projectId } = useParams(); // Using projectId from URL params
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
   const CACHE_KEY_FILTERS = `loglite_filters_${projectId}`;
   const CACHE_KEY_REFRESH = `loglite_refresh_${projectId}`;
@@ -129,7 +136,13 @@ export default function Logs() {
           </div>
 
           <div className="mt-auto flex flex-col gap-4">
-             <ThemeToggle />
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 p-3 text-zinc-500 hover:text-red-500 transition-colors bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 font-bold"
+            >
+              <LogOut size={16} /> Logout
+            </button>
+            <ThemeToggle />
              <div className="p-4 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800">
                 <div className="flex items-center justify-between mb-2">
                    <span className="text-[10px] uppercase font-bold text-zinc-400">Auto Refresh</span>
