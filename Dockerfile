@@ -22,7 +22,7 @@ RUN npm run build
 FROM caddy:2-alpine
 
 # copy static build
-COPY --from=build /app/dist /srv
+COPY --from=build /app/dist /usr/share/caddy
 
 # copy caddy config
 COPY Caddyfile /etc/caddy/Caddyfile
