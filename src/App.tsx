@@ -41,7 +41,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/loglite-dashboard">
       <Routes>
         {/* Auth Routes */}
         <Route 
