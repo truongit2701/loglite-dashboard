@@ -8,9 +8,9 @@ ARG VITE_API_BASE_URL
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
-# Stage 2: Chỉ giữ lại static files
-FROM alpine:latest
-WORKDIR /usr/share/caddy
-COPY --from=build /app/dist .
-# Container này chỉ cần tồn tại để Docker Compose có thể copy file qua volume
-CMD ["sh", "-c", "echo 'Frontend files ready' && sleep infinity"]
+# Stage 2: Caddy runtime
+FROM caddy:2-alpine
+COPY --from=build /app/dist /usr/share/caddy
+COPY Caddyfile /etc/caddy/Caddyfile
+EXPOSE 80
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
